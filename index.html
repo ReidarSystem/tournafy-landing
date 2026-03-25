@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournafy — Plan a tournament in half a game's time.</title>
+  <meta name="description" content="The smart tournament platform for SA school sport. AI-planned programs, live maps, and a fan page parents actually use." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0F2D1A;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid rgba(29,158,117,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #0F2D1A;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: #9FE1CB; font-size: 14px; }
+    .nav-links a:hover { color: #fff; }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .wa-btn:hover { background: #1ebe5a; color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 80px 48px 72px;
+      overflow: hidden;
+    }
+    .hero-bg-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 48px,
+        rgba(29,158,117,0.06) 48px, rgba(29,158,117,0.06) 49px
+      );
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(29,158,117,0.15);
+      border: 1px solid rgba(29,158,117,0.3);
+      color: #9FE1CB;
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+
+    h1 {
+      color: #fff;
+      font-size: 48px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1 .accent { color: #F5A623; }
+
+    .hero-sub {
+      color: #9FE1CB;
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; align-items: center; }
+    .btn-secondary {
+      background: transparent;
+      color: #9FE1CB;
+      border: 1px solid rgba(29,158,117,0.4);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    .btn-secondary:hover { background: rgba(29,158,117,0.1); color: #fff; }
+
+    /* ── BROWSER MOCK ── */
+    .browser-frame {
+      margin: 48px auto 0;
+      max-width: 680px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(29,158,117,0.25);
+    }
+    .browser-bar {
+      background: #142E1C;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .browser-dots { display: flex; gap: 5px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: #E24B4A; }
+    .dot-amber { background: #F5A623; }
+    .dot-green { background: #1D9E75; }
+    .browser-url {
+      background: #0F2D1A;
+      border-radius: 5px;
+      padding: 4px 12px;
+      flex: 1;
+      margin: 0 10px;
+      font-size: 11px;
+      color: #9FE1CB;
+      font-family: monospace;
+    }
+    .browser-content { background: #fff; padding: 20px; }
+
+    .fan-header {
+      background: #0F2D1A;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .fan-title { color: #fff; font-size: 15px; font-weight: 500; }
+    .fan-sub { color: #9FE1CB; font-size: 12px; margin-top: 2px; }
+    .fan-brand { display: flex; align-items: center; gap: 6px; }
+    .fan-brand span { color: #9FE1CB; font-size: 11px; }
+
+    .search-bar {
+      border: 2px solid #1D9E75;
+      border-radius: 10px;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+    .search-bar span { color: #4A7A5E; font-size: 15px; }
+
+    .fixture-card {
+      border: 1px solid rgba(29,158,117,0.2);
+      border-left: 3px solid #1D9E75;
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+    .fixture-tags { display: flex; gap: 6px; margin-bottom: 10px; }
+    .tag-green { background: #E1F5EE; color: #0F6E56; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 4px; }
+    .tag-live { background: #1D9E75; color: #fff; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
+    .live-dot { width: 5px; height: 5px; border-radius: 50%; background: #fff; display: inline-block; }
+    .fixture-name { font-size: 14px; font-weight: 500; color: #0F2D1A; margin-bottom: 8px; }
+    .fixture-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 1fr;
+      gap: 4px;
+      font-size: 12px;
+      color: #4A7A5E;
+      padding: 6px 0;
+      border-top: 1px solid rgba(29,158,117,0.1);
+    }
+    .fixture-time { color: #1D9E75; font-weight: 500; font-size: 13px; }
+    .fixture-field { color: #0F2D1A; font-weight: 500; }
+    .btn-amber { background: #F5A623; color: #0F2D1A; padding: 9px 14px; border-radius: 8px; font-size: 12px; font-weight: 500; width: 100%; margin-top: 10px; text-align: center; display: block; }
+    .btn-outline-green { background: transparent; color: #1D9E75; border: 1px solid #1D9E75; padding: 8px 14px; border-radius: 8px; font-size: 12px; width: 100%; margin-top: 6px; text-align: center; display: block; }
+
+    /* ── COUNTDOWN ── */
+    .countdown-section {
+      padding: 56px 48px;
+      text-align: center;
+    }
+    .countdown-label {
+      color: #F5A623;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .countdown-headline {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 36px;
+    }
+    .countdown-headline span { color: #1D9E75; }
+
+    .flip-clock {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .flip-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .flip-unit-label {
+      color: #9FE1CB;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .flip-digits {
+      display: flex;
+      gap: 4px;
+    }
+
+    .flip-digit {
+      position: relative;
+      width: 52px;
+      height: 72px;
+      perspective: 200px;
+    }
+
+    /* Static halves */
+    .flip-digit__top,
+    .flip-digit__bottom {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #142E1C;
+      border: 1px solid rgba(29,158,117,0.25);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      font-family: 'Inter', monospace;
+    }
+    .flip-digit__top {
+      top: 0;
+      border-radius: 6px 6px 0 0;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+      align-items: flex-end;
+      padding-bottom: 2px;
+      background: linear-gradient(180deg, #1a3d2a 0%, #142E1C 100%);
+    }
+    .flip-digit__bottom {
+      bottom: 0;
+      border-radius: 0 0 6px 6px;
+      border-top: 1px solid rgba(0,0,0,0.4);
+      align-items: flex-start;
+      padding-top: 2px;
+      background: linear-gradient(180deg, #142E1C 0%, #111f16 100%);
+    }
+    /* The inner span shifts the number so only one half is visible */
+    .flip-digit__top span,
+    .flip-digit__bottom span {
+      display: block;
+      line-height: 72px;
+      height: 72px;
+    }
+    .flip-digit__top span { transform: translateY(50%); }
+    .flip-digit__bottom span { transform: translateY(-50%); }
+
+    /* Animated flap */
+    .flip-digit__flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #142E1C;
+      border: 1px solid rgba(29,158,117,0.25);
+      border-radius: 6px 6px 0 0;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+      transform-origin: bottom center;
+      transform: rotateX(0deg);
+      backface-visibility: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      font-family: 'Inter', monospace;
+      background: linear-gradient(180deg, #1a3d2a 0%, #142E1C 100%);
+      z-index: 2;
+    }
+    .flip-digit__flap span {
+      display: block;
+      line-height: 72px;
+      height: 72px;
+      transform: translateY(50%);
+    }
+    .flip-digit__flap.flip-animate {
+      animation: flipDown 0.25s ease-in forwards;
+    }
+
+    /* Bottom flap (reveals new value from below) */
+    .flip-digit__flap-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #142E1C;
+      border: 1px solid rgba(29,158,117,0.25);
+      border-radius: 0 0 6px 6px;
+      border-top: 1px solid rgba(0,0,0,0.4);
+      transform-origin: top center;
+      transform: rotateX(90deg);
+      backface-visibility: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      font-family: 'Inter', monospace;
+      background: linear-gradient(180deg, #142E1C 0%, #111f16 100%);
+      z-index: 2;
+    }
+    .flip-digit__flap-bottom span {
+      display: block;
+      line-height: 72px;
+      height: 72px;
+      transform: translateY(-50%);
+    }
+    .flip-digit__flap-bottom.flip-animate-bottom {
+      animation: flipUp 0.25s ease-out 0.25s forwards;
+    }
+
+    .flip-separator {
+      color: #1D9E75;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 72px;
+      margin-top: 0;
+      opacity: 0.7;
+    }
+
+    @keyframes flipDown {
+      0%   { transform: rotateX(0deg); }
+      100% { transform: rotateX(-90deg); }
+    }
+    @keyframes flipUp {
+      0%   { transform: rotateX(90deg); }
+      100% { transform: rotateX(0deg); }
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 64px 48px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: #142E1C;
+      border: 1px solid rgba(29,158,117,0.2);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .feature-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(245,166,35,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .feature-title { color: #fff; font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+    .feature-body { color: #9FE1CB; font-size: 13px; line-height: 1.6; }
+
+    /* ── PRICING ── */
+    .pricing {
+      margin: 0 48px 64px;
+      background: #142E1C;
+      border: 1px solid rgba(29,158,117,0.2);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+    .pricing-eyebrow { color: #F5A623; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .pricing-amount { color: #fff; font-size: 40px; font-weight: 500; margin-bottom: 6px; }
+    .pricing-sub { color: #9FE1CB; font-size: 14px; margin-bottom: 28px; }
+    .pricing-items { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; }
+    .pricing-item { display: flex; align-items: center; gap: 8px; color: #9FE1CB; font-size: 13px; }
+    .check-circle { width: 16px; height: 16px; border-radius: 50%; background: rgba(29,158,117,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(29,158,117,0.15);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 8px; }
+    .footer-tagline { color: #9FE1CB; font-size: 13px; }
+    .footer-copy { color: rgba(157,225,203,0.45); font-size: 12px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      h1 { font-size: 32px; }
+      .hero { padding: 48px 20px 48px; }
+      .features { padding: 40px 20px; grid-template-columns: 1fr; }
+      .pricing { margin: 0 20px 48px; padding: 28px 20px; }
+      footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+      .flip-digit { width: 40px; height: 56px; }
+      .flip-digit__top, .flip-digit__bottom, .flip-digit__flap, .flip-digit__flap-bottom { font-size: 30px; }
+      .flip-digit__top span, .flip-digit__bottom span, .flip-digit__flap span, .flip-digit__flap-bottom span { line-height: 56px; height: 56px; }
+      .flip-separator { font-size: 36px; line-height: 56px; }
+      .countdown-section { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-logo">
+      <!-- Tournafy Logo SVG -->
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Tournafy logo">
+        <rect x="1" y="1" width="13" height="13" rx="3" fill="#FFFFFF"/>
+        <rect x="18" y="1" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="1" y="18" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="18" y="18" width="13" height="13" rx="3" fill="#F5A623"/>
+      </svg>
+      <span style="font-weight:500;font-size:17px;color:#fff;letter-spacing:-0.02em;">Tournafy</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#how-it-works">For schools</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+
+    <a
+      class="wa-btn"
+      href="https://wa.me/27734905425?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Tournafy"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <!-- WhatsApp SVG icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Enquire on WhatsApp
+    </a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg-lines"></div>
+
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Built for SA school sport
+    </div>
+
+    <h1>Plan a tournament in <span class="accent">half a game's</span> time.</h1>
+
+    <p class="hero-sub">
+      AI-planned programs, satellite field maps, and a fan page parents actually use — all from one link.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#how-it-works" class="btn-secondary">See how it works</a>
+    </div>
+
+    <!-- Browser mock -->
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-amber"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <div class="browser-url">tournafy.app/t/bishops-winter-tournament</div>
+      </div>
+      <div class="browser-content">
+        <div class="fan-header">
+          <div>
+            <div class="fan-title">Bishops Winter Tournament 2025</div>
+            <div class="fan-sub">Saturday, 14 June · Bishops Diocesan College</div>
+          </div>
+          <div class="fan-brand">
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+              <rect x="1" y="1" width="13" height="13" rx="3" fill="#FFFFFF"/>
+              <rect x="18" y="1" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+              <rect x="1" y="18" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+              <rect x="18" y="18" width="13" height="13" rx="3" fill="#F5A623"/>
+            </svg>
+            <span>Tournafy</span>
+          </div>
+        </div>
+
+        <div class="search-bar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1D9E75" stroke-width="1.5">
+            <circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10l3 3" stroke-linecap="round"/>
+          </svg>
+          <span>Search a player's name...</span>
+        </div>
+
+        <div class="fixture-card">
+          <div class="fixture-tags">
+            <span class="tag-green">Rugby U14A</span>
+            <span class="tag-live"><span class="live-dot"></span>Live now</span>
+          </div>
+          <div class="fixture-name">Liam van der Merwe — Bishops U14A</div>
+          <div class="fixture-row">
+            <span class="fixture-time">09:00</span>
+            <span class="fixture-field">Field 1 (Main)</span>
+            <span>vs SACS U14A</span>
+          </div>
+          <div class="fixture-row">
+            <span class="fixture-time">11:30</span>
+            <span class="fixture-field">Field 1 (Main)</span>
+            <span>vs Rondebosch U14A</span>
+          </div>
+          <div class="btn-amber">Get directions to Field 1 (Main)</div>
+          <div class="btn-outline-green">Get directions to Field 1 · 11:30 game</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COUNTDOWN ── -->
+  <section class="countdown-section">
+    <div class="countdown-label">Launching soon</div>
+    <div class="countdown-headline">Tournafy goes live on <span>30 March at 1 pm</span></div>
+
+    <div class="flip-clock">
+
+      <!-- DAYS -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="days-digits"></div>
+        <div class="flip-unit-label">Days</div>
+      </div>
+
+      <div class="flip-separator" style="align-self:center;margin-bottom:22px;">:</div>
+
+      <!-- HOURS -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="hours-digits"></div>
+        <div class="flip-unit-label">Hours</div>
+      </div>
+
+      <div class="flip-separator" style="align-self:center;margin-bottom:22px;">:</div>
+
+      <!-- MINUTES -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="mins-digits"></div>
+        <div class="flip-unit-label">Minutes</div>
+      </div>
+
+      <div class="flip-separator" style="align-self:center;margin-bottom:22px;">:</div>
+
+      <!-- SECONDS -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="secs-digits"></div>
+        <div class="flip-unit-label">Seconds</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="features" id="how-it-works">
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 2L11 6H16L12 9.5L13.5 14L9 11.5L4.5 14L6 9.5L2 6H7L9 2Z" fill="#F5A623"/>
+        </svg>
+      </div>
+      <div class="feature-title">AI tournament planner</div>
+      <div class="feature-body">Describe your tournament in plain language. Get a full program — fixtures, fields, times — in minutes. Tweak anything with a click.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="2" y="2" width="14" height="14" rx="2" stroke="#F5A623" stroke-width="1.5" fill="none"/>
+          <path d="M5 5L13 5M5 9L13 9M5 13L10 13" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="feature-title">Tap-to-plot field map</div>
+      <div class="feature-body">Open a satellite view of your school. Tap four corners on each field. Name it. Done — the map is live for every parent instantly.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="7" r="3" stroke="#F5A623" stroke-width="1.5" fill="none"/>
+          <path d="M9 1C5.686 1 3 3.686 3 7c0 4.5 6 10 6 10s6-5.5 6-10c0-3.314-2.686-6-6-6z" stroke="#F5A623" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="feature-title">Walking directions for parents</div>
+      <div class="feature-body">Parents search their child's name. One tap opens Google Maps walking directions to the exact field. No paper maps, no lost parents calling the office.</div>
+    </div>
+
+  </section>
+
+  <!-- ── PRICING ── -->
+  <div class="pricing" id="pricing">
+    <div class="pricing-eyebrow">Simple pricing</div>
+    <div class="pricing-amount">R2,000</div>
+    <div class="pricing-sub">per tournament · pay by EFT or SnapScan · no subscription</div>
+    <div class="pricing-items">
+      <div class="pricing-item">
+        <div class="check-circle">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4L3 6L7 2" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        AI-planned program
+      </div>
+      <div class="pricing-item">
+        <div class="check-circle">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4L3 6L7 2" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        Live public fan page
+      </div>
+      <div class="pricing-item">
+        <div class="check-circle">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4L3 6L7 2" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        Satellite field map
+      </div>
+      <div class="pricing-item">
+        <div class="check-circle">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4L3 6L7 2" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        Sponsor placement
+      </div>
+    </div>
+
+    <a
+      class="wa-btn"
+      href="https://wa.me/27734905425?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Tournafy"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="font-size:15px;padding:14px 36px;border-radius:10px;"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Enquire on WhatsApp
+    </a>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-brand">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+        <rect x="1" y="1" width="13" height="13" rx="3" fill="#FFFFFF"/>
+        <rect x="18" y="1" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="1" y="18" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="18" y="18" width="13" height="13" rx="3" fill="#F5A623"/>
+      </svg>
+      <span class="footer-tagline">Plan a tournament in half a game's time.</span>
+    </div>
+    <span class="footer-copy">Made in Cape Town · 2026</span>
+  </footer>
+
+  <!-- ── FLIP CLOCK JS ── -->
+  <script>
+    // Target: 30 March 2026 at 13:00 SAST (UTC+2 = 11:00 UTC)
+    const TARGET = new Date('2026-03-30T11:00:00Z');
+
+    // ── Build digit elements ──────────────────────────────────
+    function createDigitEl() {
+      const wrap = document.createElement('div');
+      wrap.className = 'flip-digit';
+
+      const top = document.createElement('div');
+      top.className = 'flip-digit__top';
+      const topSpan = document.createElement('span');
+      top.appendChild(topSpan);
+
+      const bottom = document.createElement('div');
+      bottom.className = 'flip-digit__bottom';
+      const bottomSpan = document.createElement('span');
+      bottom.appendChild(bottomSpan);
+
+      const flap = document.createElement('div');
+      flap.className = 'flip-digit__flap';
+      const flapSpan = document.createElement('span');
+      flap.appendChild(flapSpan);
+
+      const flapBottom = document.createElement('div');
+      flapBottom.className = 'flip-digit__flap-bottom';
+      const flapBottomSpan = document.createElement('span');
+      flapBottom.appendChild(flapBottomSpan);
+
+      wrap.appendChild(top);
+      wrap.appendChild(bottom);
+      wrap.appendChild(flap);
+      wrap.appendChild(flapBottom);
+
+      return { wrap, topSpan, bottomSpan, flapSpan, flapBottomSpan, flap, flapBottom };
+    }
+
+    // ── Initialise digit groups ───────────────────────────────
+    const groups = {
+      days:  { el: document.getElementById('days-digits'),  digits: 3, current: [-1,-1,-1] },
+      hours: { el: document.getElementById('hours-digits'), digits: 2, current: [-1,-1] },
+      mins:  { el: document.getElementById('mins-digits'),  digits: 2, current: [-1,-1] },
+      secs:  { el: document.getElementById('secs-digits'),  digits: 2, current: [-1,-1] },
+    };
+
+    // Build DOM for each group
+    Object.values(groups).forEach(g => {
+      g.cards = [];
+      for (let i = 0; i < g.digits; i++) {
+        const card = createDigitEl();
+        g.el.appendChild(card.wrap);
+        g.cards.push(card);
+      }
+    });
+
+    // ── Set a single digit with optional flip animation ───────
+    function setDigit(card, newVal, animate) {
+      if (!animate) {
+        card.topSpan.textContent = newVal;
+        card.bottomSpan.textContent = newVal;
+        card.flapSpan.textContent = newVal;
+        card.flapBottomSpan.textContent = newVal;
+        return;
+      }
+      // Snapshot current value (shown on top flap departing)
+      const oldVal = card.topSpan.textContent;
+
+      // Static bottom half already shows new value (revealed when flap lifts)
+      card.bottomSpan.textContent = newVal;
+
+      // The animated top flap shows OLD value folding down
+      card.flapSpan.textContent = oldVal;
+      // The animated bottom flap shows NEW value coming up
+      card.flapBottomSpan.textContent = newVal;
+
+      // Reset animations
+      card.flap.classList.remove('flip-animate');
+      card.flapBottom.classList.remove('flip-animate-bottom');
+      void card.flap.offsetWidth; // reflow
+
+      card.flap.classList.add('flip-animate');
+      card.flapBottom.classList.add('flip-animate-bottom');
+
+      // After animation: settle static halves
+      setTimeout(() => {
+        card.topSpan.textContent = newVal;
+        card.flapSpan.textContent = newVal;
+        card.flap.classList.remove('flip-animate');
+        card.flapBottom.classList.remove('flip-animate-bottom');
+      }, 520);
+    }
+
+    // ── Update a whole group (e.g. 2-digit number) ────────────
+    function updateGroup(group, value, animate) {
+      const str = String(value).padStart(group.digits, '0');
+      for (let i = 0; i < group.digits; i++) {
+        const d = parseInt(str[i]);
+        if (d !== group.current[i]) {
+          setDigit(group.cards[i], str[i], animate);
+          group.current[i] = d;
+        }
+      }
+    }
+
+    // ── Main tick ─────────────────────────────────────────────
+    function tick(animate) {
+      const now = Date.now();
+      let diff = Math.max(0, Math.floor((TARGET - now) / 1000));
+
+      const days  = Math.floor(diff / 86400); diff -= days  * 86400;
+      const hours = Math.floor(diff / 3600);  diff -= hours * 3600;
+      const mins  = Math.floor(diff / 60);    diff -= mins  * 60;
+      const secs  = diff;
+
+      updateGroup(groups.days,  days,  animate);
+      updateGroup(groups.hours, hours, animate);
+      updateGroup(groups.mins,  mins,  animate);
+      updateGroup(groups.secs,  secs,  animate);
+    }
+
+    // First render without animation, then animate every second
+    tick(false);
+    setInterval(() => tick(true), 1000);
+  </script>
+
+</body>
+</html>
