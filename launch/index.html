@@ -180,8 +180,8 @@
       line-height: 72px;
       height: 72px;
     }
-    .fd-upper span { transform: translateY(50%); }
-    .fd-lower span { transform: translateY(-50%); }
+    .fd-upper span { transform: translateY(calc(50% + 3px)); }
+    .fd-lower span { transform: translateY(calc(-50% - 3px)); }
 
     /* Flip flaps */
     .fd-flap-top {
@@ -212,7 +212,7 @@
       display: block;
       line-height: 72px;
       height: 72px;
-      transform: translateY(50%);
+      transform: translateY(calc(50% + 3px));
     }
     .fd-flap-bot {
       position: absolute;
@@ -243,7 +243,7 @@
       display: block;
       line-height: 72px;
       height: 72px;
-      transform: translateY(-50%);
+      transform: translateY(calc(-50% - 3px));
     }
     .fd-flap-top.flip-top { animation: flipTop 0.25s ease-in forwards; }
     .fd-flap-bot.flip-bot { animation: flipBot 0.25s ease-out 0.25s forwards; }
