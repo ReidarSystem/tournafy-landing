@@ -826,15 +826,17 @@
       flapTop.classList.add('flip-top');
       flapBot.classList.add('flip-bot');
 
-      // Update static halves
+      
       upper.textContent = val;
-      lower.textContent = val;
+      
 
       // Clean up animation classes after done
       setTimeout(() => {
         flapTop.classList.remove('flip-top');
         flapBot.classList.remove('flip-bot');
-      }, 520);
+        lower.textContent = val;
+    flapTopSpan.textContent = val;
+  }, 520);
     }
 
     function setUnit(digits, str) {
