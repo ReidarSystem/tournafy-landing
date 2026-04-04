@@ -33,15 +33,19 @@
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; }
     .nav-logo span { font-weight: 500; font-size: 17px; color: #fff; letter-spacing: -0.02em; }
-    .wa-nav {
-      display: flex;
+    .wa-btn {
+      display: inline-flex;
       align-items: center;
-      gap: 7px;
-      color: #9FE1CB;
+      gap: 8px;
+      background: #25D366;
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-weight: 500;
       font-size: 14px;
-      transition: opacity 0.15s;
+      transition: background 0.2s;
     }
-    .wa-nav:hover { opacity: 0.8; }
+    .wa-btn:hover { background: #1ebe5a; color: #fff; }
 
     /* ── HERO ── */
     .hero {
@@ -62,7 +66,7 @@
       gap: 6px;
       background: rgba(29,158,117,0.15);
       border: 1px solid rgba(29,158,117,0.3);
-      color: #9FE1CB;
+      font-weight: 500;
       font-size: 12px;
       padding: 5px 14px;
       border-radius: 20px;
@@ -93,7 +97,7 @@
     }
     .accent { color: #F5A623; }
     .hero-sub {
-      color: #9FE1CB;
+      font-weight: 500;
       font-size: 17px;
       line-height: 1.65;
       max-width: 520px;
@@ -132,7 +136,7 @@
       gap: 10px;
     }
     .flip-unit-label {
-      color: #9FE1CB;
+      font-weight: 500;
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -342,7 +346,7 @@
     }
     .video-placeholder-text { color: rgba(157,225,203,0.4); font-size: 13px; }
     .video-footer { background: #142E1C; padding: 16px 22px; }
-    .video-desc { color: #9FE1CB; font-size: 14px; line-height: 1.55; margin-bottom: 6px; }
+    .video-desc { font-weight: 500; font-size: 14px; line-height: 1.55; margin-bottom: 6px; }
     .video-credit { color: rgba(157,225,203,0.45); font-size: 12px; }
 
     /* ── FEATURES ── */
@@ -384,7 +388,7 @@
       flex-shrink: 0;
     }
     .feature-title { color: #fff; font-size: 12px; font-weight: 600; line-height: 1.3; }
-    .feature-body { color: #9FE1CB; font-size: 11px; line-height: 1.55; }
+    .feature-body { font-weight: 500; font-size: 11px; line-height: 1.55; }
 
     /* ── FORM ── */
     .form-section { padding: 0 48px 64px; }
@@ -410,12 +414,12 @@
       text-transform: uppercase;
     }
     .form-title { color: #fff; font-size: 24px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; }
-    .form-sub { color: #9FE1CB; font-size: 14px; line-height: 1.6; margin-bottom: 28px; }
+    .form-sub { font-weight: 500; font-size: 14px; line-height: 1.6; margin-bottom: 28px; }
     form { display: flex; flex-direction: column; gap: 16px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     label {
       display: block;
-      color: #9FE1CB;
+      font-weight: 500;
       font-size: 12px;
       font-weight: 500;
       margin-bottom: 6px;
@@ -447,7 +451,7 @@
       cursor: pointer;
       margin-top: 4px;
       font-family: 'Inter', system-ui, sans-serif;
-      transition: opacity 0.15s;
+      transition: background 0.2s;
     }
     .submit-btn:hover { opacity: 0.9; }
     .submit-btn:disabled { opacity: 0.6; cursor: wait; }
@@ -456,7 +460,7 @@
     .form-success { display: none; text-align: center; padding: 20px 0; }
     .success-trophy { font-size: 52px; margin-bottom: 16px; }
     .success-title { color: #fff; font-size: 22px; font-weight: 500; margin-bottom: 10px; }
-    .success-body { color: #9FE1CB; font-size: 15px; line-height: 1.65; max-width: 380px; margin: 0 auto 20px; }
+    .success-body { font-weight: 500; font-size: 15px; line-height: 1.65; max-width: 380px; margin: 0 auto 20px; }
     .success-note { color: rgba(157,225,203,0.45); font-size: 12px; }
 
     /* ── PRICING STRIP ── */
@@ -473,7 +477,7 @@
       flex-wrap: wrap;
     }
     .pricing-main { color: #fff; font-size: 16px; font-weight: 500; margin-bottom: 4px; }
-    .pricing-sub { color: #9FE1CB; font-size: 13px; }
+    .pricing-sub { font-weight: 500; font-size: 13px; }
     .btn-register {
       background: #1D9E75;
       color: #fff;
@@ -482,7 +486,7 @@
       font-size: 14px;
       font-weight: 500;
       white-space: nowrap;
-      transition: opacity 0.15s;
+      transition: background 0.2s;
     }
     .btn-register:hover { opacity: 0.88; }
 
@@ -497,14 +501,14 @@
       gap: 12px;
     }
     .footer-left { display: flex; align-items: center; gap: 8px; }
-    .footer-tagline { color: #9FE1CB; font-size: 13px; }
-    .footer-wa { display: flex; align-items: center; gap: 6px; color: #9FE1CB; font-size: 13px; }
+    .footer-tagline { font-weight: 500; font-size: 13px; }
+    .footer-wa { display: flex; align-items: center; gap: 6px; font-weight: 500; font-size: 13px; }
     .footer-wa:hover { color: #fff; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 14px 20px; }
-      .wa-nav span { display: none; }
+      .wa-btn span { display: none; }
       h1 { font-size: 34px; }
       .hero { padding: 52px 20px 48px; }
       .countdown-section { padding: 32px 10px 40px; }
@@ -544,8 +548,8 @@
       </svg>
       <span>Tournafy</span>
     </div>
-    <a class="wa-nav" href="https://wa.me/27734905424?text=Hi%20Juwan!%20I%20have%20a%20question%20about%20Tournafy" target="_blank" rel="noopener noreferrer">
-      <span>Questions? WhatsApp us →</span>
+    <a class="wa-btn" href="https://wa.me/27734905424?text=Hi%20Juwan!%20I%20have%20a%20question%20about%20Tournafy" target="_blank" rel="noopener noreferrer">
+      <!-- WhatsApp SVG icon -->      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>      </svg>      Enquire on WhatsApp
     </a>
   </nav>
 
