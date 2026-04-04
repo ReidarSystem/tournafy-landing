@@ -738,9 +738,9 @@
           <div>
             <label for="tournament-date">
               Next tournament date
-              <span class="label-note" id="date-note">(available after launch)</span>
+              <span class="label-note" id="date-note">(from 14 April 2026)</span>
             </label>
-            <input type="date" id="tournament-date" name="tournament_date" disabled />
+            <input type="date" id="tournament-date" name="tournament_date" min="2026-04-14" />
           </div>
           <div class="form-error" id="form-error">Something went wrong. Please try again or <a href="https://wa.me/27734905424" style="color:#E24B4A;text-decoration:underline;">WhatsApp us directly</a>.</div>
           <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
@@ -849,9 +849,6 @@
       if (diff <= 0) {
         document.getElementById('flip-clock').style.display = 'none';
         document.getElementById('launched-badge').style.display = 'inline-flex';
-        // Unlock date input after launch
-        document.getElementById('tournament-date').disabled = false;
-        document.getElementById('date-note').textContent = '';
         clearInterval(timer);
         return;
       }
