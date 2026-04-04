@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournafy — Coming 14 April 2026</title>
+  <meta name="description" content="The smart tournament platform for SA school sport. Register your school's interest — first tournament is completely free." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0F2D1A;
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid rgba(29,158,117,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #0F2D1A;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo span { font-weight: 500; font-size: 17px; color: #fff; letter-spacing: -0.02em; }
+    .wa-nav {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #9FE1CB;
+      font-size: 14px;
+      transition: opacity 0.15s;
+    }
+    .wa-nav:hover { opacity: 0.8; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 80px 48px 64px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(90deg, transparent, transparent 48px, rgba(29,158,117,0.06) 48px, rgba(29,158,117,0.06) 49px);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(29,158,117,0.15);
+      border: 1px solid rgba(29,158,117,0.3);
+      color: #9FE1CB;
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #1D9E75;
+      animation: pulseDot 1.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.82); }
+    }
+    h1 {
+      color: #fff;
+      font-size: 50px;
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .accent { color: #F5A623; }
+    .hero-sub {
+      color: #9FE1CB;
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 520px;
+      margin: 0 auto 10px;
+      font-weight: 400;
+    }
+    .hero-note {
+      color: rgba(157,225,203,0.55);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* ── COUNTDOWN ── */
+    .countdown-section {
+      padding: 48px 48px 56px;
+      text-align: center;
+    }
+    .countdown-label {
+      color: #F5A623;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .flip-clock {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 20px;
+    }
+    .flip-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .flip-unit-label {
+      color: #9FE1CB;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .flip-digits { display: flex; gap: 4px; }
+    .flip-digit {
+      position: relative;
+      width: 52px;
+      height: 72px;
+      perspective: 200px;
+    }
+    .fd-upper, .fd-lower {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      font-family: 'Inter', monospace;
+      border: 1px solid rgba(29,158,117,0.25);
+    }
+    .fd-upper {
+      top: 0;
+      align-items: flex-end;
+      padding-bottom: 2px;
+      border-radius: 6px 6px 0 0;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+      background: linear-gradient(180deg, #1a3d2a 0%, #142E1C 100%);
+    }
+    .fd-lower {
+      bottom: 0;
+      align-items: flex-start;
+      padding-top: 2px;
+      border-radius: 0 0 6px 6px;
+      border-top: 1px solid rgba(0,0,0,0.4);
+      background: linear-gradient(180deg, #142E1C 0%, #111f16 100%);
+    }
+    .fd-upper span, .fd-lower span {
+      display: block;
+      line-height: 72px;
+      height: 72px;
+    }
+    .fd-upper span { transform: translateY(50%); }
+    .fd-lower span { transform: translateY(-50%); }
+
+    /* Flip flaps */
+    .fd-flap-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      font-family: 'Inter', monospace;
+      border: 1px solid rgba(29,158,117,0.25);
+      border-radius: 6px 6px 0 0;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+      background: linear-gradient(180deg, #1a3d2a 0%, #142E1C 100%);
+      transform-origin: bottom center;
+      backface-visibility: hidden;
+      z-index: 3;
+      align-items: flex-end;
+      padding-bottom: 2px;
+    }
+    .fd-flap-top span {
+      display: block;
+      line-height: 72px;
+      height: 72px;
+      transform: translateY(50%);
+    }
+    .fd-flap-bot {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 40px;
+      font-weight: 600;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      font-family: 'Inter', monospace;
+      border: 1px solid rgba(29,158,117,0.25);
+      border-radius: 0 0 6px 6px;
+      border-top: 1px solid rgba(0,0,0,0.4);
+      background: linear-gradient(180deg, #142E1C 0%, #111f16 100%);
+      transform-origin: top center;
+      backface-visibility: hidden;
+      z-index: 3;
+      align-items: flex-start;
+      padding-top: 2px;
+      transform: rotateX(90deg);
+    }
+    .fd-flap-bot span {
+      display: block;
+      line-height: 72px;
+      height: 72px;
+      transform: translateY(-50%);
+    }
+    .fd-flap-top.flip-top { animation: flipTop 0.25s ease-in forwards; }
+    .fd-flap-bot.flip-bot { animation: flipBot 0.25s ease-out 0.25s forwards; }
+
+    @keyframes flipTop {
+      0%   { transform: rotateX(0deg); }
+      100% { transform: rotateX(-90deg); }
+    }
+    @keyframes flipBot {
+      0%   { transform: rotateX(90deg); }
+      100% { transform: rotateX(0deg); }
+    }
+
+    .flip-separator {
+      color: #1D9E75;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 72px;
+      opacity: 0.7;
+    }
+    .countdown-sub {
+      color: rgba(157,225,203,0.4);
+      font-size: 12px;
+      margin-top: 22px;
+    }
+    .launched-badge {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(29,158,117,0.2);
+      border: 1px solid #1D9E75;
+      color: #1D9E75;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 12px;
+      margin: 0 auto;
+    }
+
+    /* ── VIDEO ── */
+    .video-section { padding: 0 48px 64px; }
+    .video-card {
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(29,158,117,0.25);
+    }
+    .video-header {
+      background: #1D9E75;
+      padding: 11px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .video-dots { display: flex; gap: 5px; }
+    .video-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      display: inline-block;
+    }
+    .video-header-label { color: #fff; font-size: 12px; opacity: 0.85; }
+    .video-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      background: #0a1f10;
+    }
+    .video-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .video-play-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(29,158,117,0.15);
+      border: 1px solid rgba(29,158,117,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-placeholder-text { color: rgba(157,225,203,0.4); font-size: 13px; }
+    .video-footer { background: #142E1C; padding: 16px 22px; }
+    .video-desc { color: #9FE1CB; font-size: 14px; line-height: 1.55; margin-bottom: 6px; }
+    .video-credit { color: rgba(157,225,203,0.45); font-size: 12px; }
+
+    /* ── FEATURES ── */
+    .features-section { padding: 0 48px 64px; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: #142E1C;
+      border-radius: 12px;
+      padding: 22px 18px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      cursor: default;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(29,158,117,0.18);
+    }
+    .feature-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .feature-title { color: #fff; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    .feature-body { color: #9FE1CB; font-size: 12px; line-height: 1.55; }
+
+    /* ── FORM ── */
+    .form-section { padding: 0 48px 64px; }
+    .form-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: #142E1C;
+      border: 1px solid rgba(29,158,117,0.2);
+      border-radius: 16px;
+      padding: 40px 36px;
+    }
+    .form-badge {
+      display: inline-block;
+      background: rgba(245,166,35,0.12);
+      border: 1px solid rgba(245,166,35,0.35);
+      color: #F5A623;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .form-title { color: #fff; font-size: 24px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; }
+    .form-sub { color: #9FE1CB; font-size: 14px; line-height: 1.6; margin-bottom: 28px; }
+    form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label {
+      display: block;
+      color: #9FE1CB;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .label-note { color: rgba(157,225,203,0.38); font-size: 11px; margin-left: 8px; font-weight: 400; }
+    input, select {
+      width: 100%;
+      background: #0F2D1A;
+      border: 1px solid rgba(29,158,117,0.3);
+      border-radius: 8px;
+      padding: 11px 14px;
+      color: #fff;
+      font-size: 14px;
+      font-family: 'Inter', system-ui, sans-serif;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input::placeholder { color: rgba(157,225,203,0.4); }
+    input:disabled { opacity: 0.38; cursor: not-allowed; }
+    .submit-btn {
+      background: #F5A623;
+      color: #0F2D1A;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+      font-family: 'Inter', system-ui, sans-serif;
+      transition: opacity 0.15s;
+    }
+    .submit-btn:hover { opacity: 0.9; }
+    .submit-btn:disabled { opacity: 0.6; cursor: wait; }
+    .form-disclaimer { color: rgba(157,225,203,0.4); font-size: 12px; text-align: center; }
+    .form-error { color: #E24B4A; font-size: 13px; line-height: 1.5; display: none; }
+    .form-success { display: none; text-align: center; padding: 20px 0; }
+    .success-trophy { font-size: 52px; margin-bottom: 16px; }
+    .success-title { color: #fff; font-size: 22px; font-weight: 500; margin-bottom: 10px; }
+    .success-body { color: #9FE1CB; font-size: 15px; line-height: 1.65; max-width: 380px; margin: 0 auto 20px; }
+    .success-note { color: rgba(157,225,203,0.45); font-size: 12px; }
+
+    /* ── PRICING STRIP ── */
+    .pricing-strip {
+      margin: 0 48px 64px;
+      background: rgba(29,158,117,0.07);
+      border: 1px solid rgba(29,158,117,0.18);
+      border-radius: 12px;
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .pricing-main { color: #fff; font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+    .pricing-sub { color: #9FE1CB; font-size: 13px; }
+    .btn-register {
+      background: #1D9E75;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-register:hover { opacity: 0.88; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(29,158,117,0.15);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-left { display: flex; align-items: center; gap: 8px; }
+    .footer-tagline { color: #9FE1CB; font-size: 13px; }
+    .footer-wa { display: flex; align-items: center; gap: 6px; color: #9FE1CB; font-size: 13px; }
+    .footer-wa:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .wa-nav span { display: none; }
+      h1 { font-size: 34px; }
+      .hero { padding: 52px 20px 48px; }
+      .countdown-section { padding: 32px 10px 40px; }
+      .flip-clock { gap: 5px; flex-wrap: nowrap; }
+      .flip-unit { gap: 5px; }
+      .flip-digits { gap: 2px; }
+      .flip-digit { width: 27px; height: 40px; perspective: 160px; }
+      .fd-upper, .fd-lower, .fd-flap-top, .fd-flap-bot { font-size: 21px; }
+      .fd-upper span, .fd-lower span, .fd-flap-top span, .fd-flap-bot span { line-height: 40px; height: 40px; }
+      .flip-separator { font-size: 24px; line-height: 40px; }
+      .flip-unit-label { font-size: 9px; letter-spacing: 0.06em; }
+      .video-section { padding: 0 16px 48px; }
+      .features-section { padding: 0 16px 48px; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .feature-card { padding: 18px 14px; }
+      .feature-title { font-size: 12px; }
+      .form-section { padding: 0 16px 48px; }
+      .form-card { padding: 28px 20px; }
+      .form-title { font-size: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .pricing-strip { margin: 0 16px 48px; padding: 20px 18px; }
+      footer { padding: 20px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-logo">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="13" height="13" rx="3" fill="#FFFFFF"/>
+        <rect x="18" y="1" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="1" y="18" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="18" y="18" width="13" height="13" rx="3" fill="#F5A623"/>
+      </svg>
+      <span>Tournafy</span>
+    </div>
+    <a class="wa-nav" href="https://wa.me/27734905424?text=Hi%20Juwan!%20I%20have%20a%20question%20about%20Tournafy" target="_blank" rel="noopener noreferrer">
+      <span>Questions? WhatsApp us →</span>
+    </a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Coming to SA schools · 14 April 2026
+    </div>
+    <h1>Your next inter-school tournament, <span class="accent">sorted in minutes.</span></h1>
+    <p class="hero-sub">Tournafy handles the fixture programme, satellite field maps, and a live fan page for parents — so you can run the day, not the admin.</p>
+    <p class="hero-note">Built for South African inter-school sport.</p>
+  </section>
+
+  <!-- ── COUNTDOWN ── -->
+  <section class="countdown-section">
+    <div class="countdown-label">Launching in</div>
+
+    <div id="launched-badge" class="launched-badge">🎉 We're live!</div>
+
+    <div id="flip-clock" class="flip-clock">
+      <!-- Days -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="digits-days"></div>
+        <span class="flip-unit-label">Days</span>
+      </div>
+      <span class="flip-separator">:</span>
+      <!-- Hours -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="digits-hours"></div>
+        <span class="flip-unit-label">Hours</span>
+      </div>
+      <span class="flip-separator">:</span>
+      <!-- Minutes -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="digits-minutes"></div>
+        <span class="flip-unit-label">Minutes</span>
+      </div>
+      <span class="flip-separator">:</span>
+      <!-- Seconds -->
+      <div class="flip-unit">
+        <div class="flip-digits" id="digits-seconds"></div>
+        <span class="flip-unit-label">Seconds</span>
+      </div>
+    </div>
+
+    <div class="countdown-sub">14 April 2026 · 10:00 SAST</div>
+  </section>
+
+  <!-- ── VIDEO ── -->
+  <section class="video-section">
+    <div class="video-card">
+      <div class="video-header">
+        <div class="video-dots">
+          <span class="video-dot"></span>
+          <span class="video-dot"></span>
+          <span class="video-dot"></span>
+        </div>
+        <span class="video-header-label">A message from the founder</span>
+      </div>
+      <div class="video-embed">
+        <!--
+          INSERT YOUR LOOM OR YOUTUBE EMBED SRC HERE
+          Replace the src attribute below with your embed URL, e.g.:
+          Loom:    https://www.loom.com/embed/YOUR_VIDEO_ID
+          YouTube: https://www.youtube.com/embed/YOUR_VIDEO_ID
+        -->
+        <iframe
+          src=""
+          title="Tournafy founder message"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-placeholder" id="video-placeholder">
+          <div class="video-play-btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 5l9 5-9 5V5z" fill="#1D9E75"/></svg>
+          </div>
+          <span class="video-placeholder-text">Video coming soon</span>
+        </div>
+      </div>
+      <div class="video-footer">
+        <p class="video-desc">Why I built this for South African schools — and how we can make your next fixture day smoother.</p>
+        <span class="video-credit">A message from Juwan · founder of Tournafy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="features-section">
+    <div class="features-grid">
+
+      <div class="feature-card" style="border:1px solid rgba(245,166,35,0.25);">
+        <div class="feature-icon" style="background:rgba(245,166,35,0.12);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 2L11 6H16L12 9.5L13.5 14L9 11.5L4.5 14L6 9.5L2 6H7L9 2Z" fill="#F5A623"/>
+          </svg>
+        </div>
+        <div class="feature-title">AI Fixture Planner</div>
+        <div class="feature-body">Describe your tournament in plain English. Get a full programme — sports, age groups, fields, times — in minutes.</div>
+      </div>
+
+      <div class="feature-card" style="border:1px solid rgba(29,158,117,0.3);">
+        <div class="feature-icon" style="background:rgba(29,158,117,0.12);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <rect x="2" y="2" width="14" height="14" rx="2" stroke="#1D9E75" stroke-width="1.5" fill="none"/>
+            <circle cx="9" cy="9" r="2.5" stroke="#1D9E75" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="feature-title">Satellite Field Maps</div>
+        <div class="feature-body">Open a live satellite view of your school. Tap four corners per field — mapped and live for parents instantly.</div>
+      </div>
+
+      <div class="feature-card" style="border:1px solid rgba(159,225,203,0.2);">
+        <div class="feature-icon" style="background:rgba(159,225,203,0.1);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="5" r="2.5" stroke="#9FE1CB" stroke-width="1.5" fill="none"/>
+            <path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#9FE1CB" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="feature-title">Live Fan Page for Parents</div>
+        <div class="feature-body">One link. Parents search their child's name and get one-tap walking directions to the exact field. No calls, no chaos.</div>
+      </div>
+
+      <div class="feature-card" style="border:1px solid rgba(226,75,74,0.2);">
+        <div class="feature-icon" style="background:rgba(226,75,74,0.1);">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 2v5l3 3" stroke="#E24B4A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <circle cx="9" cy="9" r="7" stroke="#E24B4A" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="feature-title">Auto Crisis-Handling</div>
+        <div class="feature-body">Field clash? Fixture conflict? Tournafy flags it before you find out on the day — and suggests a fix.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── INTEREST FORM ── -->
+  <section class="form-section" id="register">
+    <div class="form-card">
+
+      <!-- Success state (hidden by default) -->
+      <div class="form-success" id="form-success">
+        <div class="success-trophy">🏆</div>
+        <div class="success-title">You're on the list!</div>
+        <div class="success-body">We'll WhatsApp you on 14 April 2026 when Tournafy goes live. Your first tournament is on us — completely free.</div>
+        <div class="success-note">No spam. Just a WhatsApp on launch day.</div>
+      </div>
+
+      <!-- Form (shown by default) -->
+      <div id="form-content">
+        <div class="form-badge">First tournament free</div>
+        <h2 class="form-title">Register your school's interest</h2>
+        <p class="form-sub">First tournament is completely free. Leave your details and we'll WhatsApp you on launch day.</p>
+
+        <!--
+          FORM SETUP:
+          1. Go to https://formspree.io and create a free account
+          2. Create a new form pointing to juwan@reidar.co.za
+          3. Copy your form endpoint (e.g. https://formspree.io/f/abcd1234)
+          4. Replace the action URL below
+        -->
+        <form id="interest-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-row">
+            <div>
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" required placeholder="e.g. James van Niekerk" />
+            </div>
+            <div>
+              <label for="role">Your role</label>
+              <input type="text" id="role" name="role" required placeholder="e.g. Director of Sport" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="school">School name</label>
+              <input type="text" id="school" name="school" required placeholder="e.g. Bishops Diocesan College" />
+            </div>
+            <div>
+              <label for="province">Province</label>
+              <select id="province" name="province" required>
+                <option value="">Select province</option>
+                <option>Western Cape</option>
+                <option>Gauteng</option>
+                <option>KwaZulu-Natal</option>
+                <option>Eastern Cape</option>
+                <option>Limpopo</option>
+                <option>Mpumalanga</option>
+                <option>North West</option>
+                <option>Free State</option>
+                <option>Northern Cape</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="tournament-date">
+              Next tournament date
+              <span class="label-note" id="date-note">(available after launch)</span>
+            </label>
+            <input type="date" id="tournament-date" name="tournament_date" disabled />
+          </div>
+          <div class="form-error" id="form-error">Something went wrong. Please try again or <a href="https://wa.me/27734905424" style="color:#E24B4A;text-decoration:underline;">WhatsApp us directly</a>.</div>
+          <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
+          <p class="form-disclaimer">No spam. Just a WhatsApp on launch day.</p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PRICING STRIP ── -->
+  <div class="pricing-strip">
+    <div>
+      <div class="pricing-main">First tournament is free. R2,000 per tournament after that.</div>
+      <div class="pricing-sub">Once-off · No subscription · Pay by EFT or SnapScan</div>
+    </div>
+    <a href="#register" class="btn-register">Register interest →</a>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-left">
+      <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="13" height="13" rx="3" fill="#FFFFFF"/>
+        <rect x="18" y="1" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="1" y="18" width="13" height="13" rx="3" fill="#1D9E75" fill-opacity="0.45"/>
+        <rect x="18" y="18" width="13" height="13" rx="3" fill="#F5A623"/>
+      </svg>
+      <span class="footer-tagline">Made in Cape Town · 2026</span>
+    </div>
+    <a class="footer-wa" href="https://wa.me/27734905424?text=Hi%20Juwan!%20I%20have%20a%20question%20about%20Tournafy" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#1D9E75"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp Juwan
+    </a>
+  </footer>
+
+  <script>
+    // ── Countdown to 14 April 2026 10:00 SAST (UTC+2) ─────────────────────
+    const LAUNCH = new Date('2026-04-14T10:00:00+02:00').getTime();
+
+    // Build flip digit elements
+    function makeDigit() {
+      const d = document.createElement('div');
+      d.className = 'flip-digit';
+      d.innerHTML = `
+        <div class="fd-upper"><span>0</span></div>
+        <div class="fd-lower"><span>0</span></div>
+        <div class="fd-flap-top"><span>0</span></div>
+        <div class="fd-flap-bot"><span>0</span></div>
+      `;
+      d._cur = '0';
+      return d;
+    }
+
+    function buildUnit(id, count) {
+      const el = document.getElementById(id);
+      const digits = [];
+      for (let i = 0; i < count; i++) {
+        const d = makeDigit();
+        el.appendChild(d);
+        digits.push(d);
+      }
+      return digits;
+    }
+
+    const daysDigits    = buildUnit('digits-days', 2);
+    const hoursDigits   = buildUnit('digits-hours', 2);
+    const minsDigits    = buildUnit('digits-minutes', 2);
+    const secsDigits    = buildUnit('digits-seconds', 2);
+
+    function setDigit(d, val) {
+      if (d._cur === val) return;
+      const prev = d._cur;
+      d._cur = val;
+
+      const upper   = d.querySelector('.fd-upper span');
+      const lower   = d.querySelector('.fd-lower span');
+      const flapTop = d.querySelector('.fd-flap-top');
+      const flapBot = d.querySelector('.fd-flap-bot');
+      const flapTopSpan = flapTop.querySelector('span');
+      const flapBotSpan = flapBot.querySelector('span');
+
+      // Top flap shows prev value, then flips away
+      flapTopSpan.textContent = prev;
+      flapBotSpan.textContent = val;
+
+      // Remove then re-add animation classes to restart
+      flapTop.classList.remove('flip-top');
+      flapBot.classList.remove('flip-bot');
+      void flapTop.offsetWidth; // reflow
+
+      flapTop.classList.add('flip-top');
+      flapBot.classList.add('flip-bot');
+
+      // Update static halves
+      upper.textContent = val;
+      lower.textContent = val;
+
+      // Clean up animation classes after done
+      setTimeout(() => {
+        flapTop.classList.remove('flip-top');
+        flapBot.classList.remove('flip-bot');
+      }, 520);
+    }
+
+    function setUnit(digits, str) {
+      const padded = str.padStart(digits.length, '0');
+      for (let i = 0; i < digits.length; i++) {
+        setDigit(digits[i], padded[i]);
+      }
+    }
+
+    function tick() {
+      const diff = LAUNCH - Date.now();
+      if (diff <= 0) {
+        document.getElementById('flip-clock').style.display = 'none';
+        document.getElementById('launched-badge').style.display = 'inline-flex';
+        // Unlock date input after launch
+        document.getElementById('tournament-date').disabled = false;
+        document.getElementById('date-note').textContent = '';
+        clearInterval(timer);
+        return;
+      }
+      const days    = Math.floor(diff / 86400000);
+      const hours   = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      setUnit(daysDigits,  String(days));
+      setUnit(hoursDigits, String(hours));
+      setUnit(minsDigits,  String(minutes));
+      setUnit(secsDigits,  String(seconds));
+    }
+
+    tick();
+    const timer = setInterval(tick, 1000);
+
+    // ── Video placeholder: hide placeholder when iframe has a src ─────────
+    const iframe = document.querySelector('.video-embed iframe');
+    if (iframe && iframe.src && iframe.src !== window.location.href) {
+      document.getElementById('video-placeholder').style.display = 'none';
+    }
+
+    // ── Form submission via Formspree AJAX ────────────────────────────────
+    // Setup: create a form at formspree.io pointing to juwan@reidar.co.za
+    // then replace YOUR_FORM_ID in the form action above.
+    const form    = document.getElementById('interest-form');
+    const content = document.getElementById('form-content');
+    const success = document.getElementById('form-success');
+    const errEl   = document.getElementById('form-error');
+    const btn     = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+      errEl.style.display = 'none';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          content.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          throw new Error('Failed');
+        }
+      } catch (_) {
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Submit';
+      }
+    });
+  </script>
+
+</body>
+</html>
