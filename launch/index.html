@@ -346,18 +346,29 @@
     .video-credit { color: rgba(157,225,203,0.45); font-size: 12px; }
 
     /* ── FEATURES ── */
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.2; }
+      40% { opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
     .features-section { padding: 0 48px 64px; }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
     }
     .feature-card {
       background: #142E1C;
       border-radius: 12px;
-      padding: 22px 18px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       transition: transform 0.18s ease, box-shadow 0.18s ease;
       cursor: default;
     }
@@ -365,17 +376,15 @@
       transform: translateY(-3px);
       box-shadow: 0 8px 28px rgba(29,158,117,0.18);
     }
-    .feature-icon {
-      width: 34px;
-      height: 34px;
+    .feature-anim {
+      height: 160px;
+      overflow: hidden;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
+      position: relative;
+      flex-shrink: 0;
     }
-    .feature-title { color: #fff; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-    .feature-body { color: #9FE1CB; font-size: 12px; line-height: 1.55; }
+    .feature-title { color: #fff; font-size: 12px; font-weight: 600; line-height: 1.3; }
+    .feature-body { color: #9FE1CB; font-size: 11px; line-height: 1.55; }
 
     /* ── FORM ── */
     .form-section { padding: 0 48px 64px; }
@@ -510,13 +519,14 @@
       .video-section { padding: 0 16px 48px; }
       .features-section { padding: 0 16px 48px; }
       .features-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .feature-card { padding: 18px 14px; }
-      .feature-title { font-size: 12px; }
+      .feature-card { padding: 14px 12px; }
+      .feature-title { font-size: 11px; }
+      .feature-body { font-size: 10px; }
       .form-section { padding: 0 16px 48px; }
       .form-card { padding: 28px 20px; }
       .form-title { font-size: 20px; }
       .form-row { grid-template-columns: 1fr; }
-      .pricing-strip { margin: 0 16px 48px; padding: 20px 18px; }
+      .pricing-strip { margin: 0 16px 28px; padding: 20px 18px; }
       footer { padding: 20px; flex-direction: column; text-align: center; }
     }
   </style>
@@ -628,51 +638,45 @@
   <section class="features-section">
     <div class="features-grid">
 
+      <!-- Card 1: AI Fixture Planner -->
       <div class="feature-card" style="border:1px solid rgba(245,166,35,0.25);">
-        <div class="feature-icon" style="background:rgba(245,166,35,0.12);">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M9 2L11 6H16L12 9.5L13.5 14L9 11.5L4.5 14L6 9.5L2 6H7L9 2Z" fill="#F5A623"/>
-          </svg>
-        </div>
+        <div class="feature-anim" id="anim-ai"></div>
         <div class="feature-title">AI Fixture Planner</div>
-        <div class="feature-body">Describe your tournament in plain English. Get a full programme — sports, age groups, fields, times — in minutes.</div>
+        <div class="feature-body">Talk to our Planner in a plain chat. Get a full programme — sports, age groups, fields, times — in minutes.</div>
       </div>
 
+      <!-- Card 2: Satellite Field Maps -->
       <div class="feature-card" style="border:1px solid rgba(29,158,117,0.3);">
-        <div class="feature-icon" style="background:rgba(29,158,117,0.12);">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <rect x="2" y="2" width="14" height="14" rx="2" stroke="#1D9E75" stroke-width="1.5" fill="none"/>
-            <circle cx="9" cy="9" r="2.5" stroke="#1D9E75" stroke-width="1.5" fill="none"/>
-          </svg>
-        </div>
+        <div class="feature-anim" id="anim-map"></div>
         <div class="feature-title">Satellite Field Maps</div>
         <div class="feature-body">Open a live satellite view of your school. Tap four corners per field — mapped and live for parents instantly.</div>
       </div>
 
+      <!-- Card 3: Live Fan Page -->
       <div class="feature-card" style="border:1px solid rgba(159,225,203,0.2);">
-        <div class="feature-icon" style="background:rgba(159,225,203,0.1);">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="9" cy="5" r="2.5" stroke="#9FE1CB" stroke-width="1.5" fill="none"/>
-            <path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#9FE1CB" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-          </svg>
-        </div>
+        <div class="feature-anim" id="anim-fan"></div>
         <div class="feature-title">Live Fan Page for Parents</div>
-        <div class="feature-body">One link. Parents search their child's name and get one-tap walking directions to the exact field. No calls, no chaos.</div>
+        <div class="feature-body">One link. Parents search their child's team and get one-tap walking directions to the exact field. No program frustration, impressive school image.</div>
       </div>
 
+      <!-- Card 4: Auto Crisis-Handling -->
       <div class="feature-card" style="border:1px solid rgba(226,75,74,0.2);">
-        <div class="feature-icon" style="background:rgba(226,75,74,0.1);">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M9 2v5l3 3" stroke="#E24B4A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="9" cy="9" r="7" stroke="#E24B4A" stroke-width="1.5" fill="none"/>
-          </svg>
-        </div>
-        <div class="feature-title">Auto Crisis-Handling</div>
-        <div class="feature-body">Field clash? Fixture conflict? Tournafy flags it before you find out on the day — and suggests a fix.</div>
+        <div class="feature-anim" id="anim-crisis"></div>
+        <div class="feature-title">Auto Crisis-Handling on the big day</div>
+        <div class="feature-body">Team cancellation? Programme overtime? Chat to the AI that edits the remaining programme live. Stress-free fix applied instantly.</div>
       </div>
 
     </div>
   </section>
+
+  <!-- ── PRICING STRIP — above form ── -->
+  <div class="pricing-strip">
+    <div>
+      <div class="pricing-main">First tournament is free. R2,000 per tournament after that.</div>
+      <div class="pricing-sub">Once-off · No subscription · Pay by EFT or SnapScan</div>
+    </div>
+    <a href="#register" class="btn-register">Register interest →</a>
+  </div>
 
   <!-- ── INTEREST FORM ── -->
   <section class="form-section" id="register">
@@ -746,15 +750,6 @@
 
     </div>
   </section>
-
-  <!-- ── PRICING STRIP ── -->
-  <div class="pricing-strip">
-    <div>
-      <div class="pricing-main">First tournament is free. R2,000 per tournament after that.</div>
-      <div class="pricing-sub">Once-off · No subscription · Pay by EFT or SnapScan</div>
-    </div>
-    <a href="#register" class="btn-register">Register interest →</a>
-  </div>
 
   <!-- ── FOOTER ── -->
   <footer>
@@ -873,6 +868,276 @@
 
     tick();
     const timer = setInterval(tick, 1000);
+
+    // ── Animated Feature Cards ─────────────────────────────────────────────
+
+    // Helper: create element with style
+    function el(tag, style, innerHTML) {
+      const e = document.createElement(tag);
+      if (style) Object.assign(e.style, style);
+      if (innerHTML) e.innerHTML = innerHTML;
+      return e;
+    }
+
+    // ── Card 1: AI Fixture Planner ──────────────────────────────────────────
+    (function() {
+      const root = document.getElementById('anim-ai');
+      Object.assign(root.style, { background: '#0a1f10', padding: '10px', fontSize: '11px', fontFamily: 'monospace' });
+
+      const bubble = el('div', {
+        background: 'rgba(29,158,117,0.2)', border: '1px solid rgba(29,158,117,0.3)',
+        borderRadius: '8px 8px 8px 2px', padding: '6px 10px', color: '#9FE1CB',
+        fontSize: '10px', marginBottom: '6px', maxWidth: '85%', animation: 'fadeUp 0.3s ease forwards'
+      });
+      bubble.textContent = '2 schools · rugby & hockey · 4 age groups · Sat 14 June';
+      root.appendChild(bubble);
+
+      const dotsEl = el('div', { display: 'flex', gap: '4px', padding: '6px 0 0 4px' });
+      for (let i = 0; i < 3; i++) {
+        const d = el('span', {
+          width: '5px', height: '5px', borderRadius: '50%', background: '#1D9E75',
+          display: 'inline-block', animation: `blink 1.2s ease-in-out ${i * 0.2}s infinite`
+        });
+        dotsEl.appendChild(d);
+      }
+
+      const loadingEl = el('div', { color: '#9FE1CB', fontSize: '10px', opacity: '0.6', padding: '4px 0 0 4px', animation: 'fadeUp 0.2s ease forwards' });
+      loadingEl.textContent = 'Generating programme…';
+
+      const rows = [
+        { time: '09:00', match: 'Bishops U14A vs SACS U14A', field: 'Field 1' },
+        { time: '09:30', match: 'Bishops U16A vs SACS U16A', field: 'Field 2' },
+        { time: '10:00', match: 'Bishops U14B vs SACS U14B', field: 'Field 3' },
+      ];
+      const resultEl = el('div', { animation: 'fadeUp 0.25s ease forwards' });
+      rows.forEach((r, i) => {
+        const row = el('div', {
+          display: 'flex', gap: '6px', padding: '3px 0', alignItems: 'center',
+          borderTop: i > 0 ? '1px solid rgba(29,158,117,0.12)' : 'none'
+        });
+        const t = el('span', { color: '#F5A623', fontSize: '9px', minWidth: '32px' }); t.textContent = r.time;
+        const m = el('span', { color: '#fff', fontSize: '9px', flex: '1' }); m.textContent = r.match;
+        const f = el('span', { color: '#9FE1CB', fontSize: '9px' }); f.textContent = r.field;
+        row.append(t, m, f); resultEl.appendChild(row);
+      });
+
+      const phases = [dotsEl, loadingEl, resultEl];
+      let cur = 0;
+      const delays = [2200, 1400, 2600];
+      root.appendChild(dotsEl);
+
+      function nextPhase() {
+        if (phases[cur].parentNode === root) root.removeChild(phases[cur]);
+        cur = (cur + 1) % 3;
+        root.appendChild(phases[cur]);
+        // reset animation
+        phases[cur].style.animation = 'none';
+        void phases[cur].offsetWidth;
+        phases[cur].style.animation = 'fadeUp 0.25s ease forwards';
+        setTimeout(nextPhase, delays[cur]);
+      }
+      setTimeout(nextPhase, delays[0]);
+    })();
+
+    // ── Card 2: Satellite Field Maps ────────────────────────────────────────
+    (function() {
+      const root = document.getElementById('anim-map');
+      Object.assign(root.style, { background: '#1a3020' });
+
+      // Grid overlay
+      const grid = el('div', {
+        position: 'absolute', inset: '0',
+        backgroundImage: 'repeating-linear-gradient(0deg,rgba(29,158,117,0.08) 0,rgba(29,158,117,0.08) 1px,transparent 1px,transparent 18px),repeating-linear-gradient(90deg,rgba(29,158,117,0.08) 0,rgba(29,158,117,0.08) 1px,transparent 1px,transparent 18px)'
+      });
+      root.appendChild(grid);
+
+      // SVG for field outline + tap markers
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      Object.assign(svg.style, { position: 'absolute', inset: '0' });
+      svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
+      svg.setAttribute('viewBox', '0 0 100 160');
+      root.appendChild(svg);
+
+      // Label
+      const label = el('div', {
+        position: 'absolute', bottom: '8px', left: '50%', transform: 'translateX(-50%)',
+        color: '#9FE1CB', fontSize: '9px', opacity: '0.6', whiteSpace: 'nowrap'
+      });
+      label.textContent = 'Tap corners to map…';
+      root.appendChild(label);
+
+      const corners = [{x:18,y:30},{x:78,y:32},{x:80,y:110},{x:16,y:108}];
+      let taps = 0;
+
+      function drawTap() {
+        svg.innerHTML = '';
+        // Field polygon (when all 4 tapped)
+        if (taps >= 4) {
+          const poly = document.createElementNS(svgNS, 'polygon');
+          poly.setAttribute('points', corners.map(c => `${c.x},${c.y}`).join(' '));
+          poly.setAttribute('fill', 'rgba(29,158,117,0.15)');
+          poly.setAttribute('stroke', '#1D9E75'); poly.setAttribute('stroke-width', '1');
+          svg.appendChild(poly);
+          label.textContent = 'Field 1 (Main) · Live ✓';
+          label.style.background = '#1D9E75';
+          label.style.color = '#fff';
+          label.style.opacity = '1';
+          label.style.padding = '2px 8px';
+          label.style.borderRadius = '4px';
+          label.style.animation = 'fadeUp 0.2s ease forwards';
+        }
+        // Tap markers
+        corners.slice(0, taps).forEach((c, i) => {
+          const g = document.createElementNS(svgNS, 'g');
+          const circle = document.createElementNS(svgNS, 'circle');
+          circle.setAttribute('cx', c.x); circle.setAttribute('cy', c.y); circle.setAttribute('r', '3.5');
+          circle.setAttribute('fill', '#F5A623'); circle.setAttribute('stroke', '#fff'); circle.setAttribute('stroke-width', '0.8');
+          const ring = document.createElementNS(svgNS, 'circle');
+          ring.setAttribute('cx', c.x); ring.setAttribute('cy', c.y); ring.setAttribute('r', '6');
+          ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', '#F5A623'); ring.setAttribute('stroke-width', '0.5'); ring.setAttribute('opacity', '0.5');
+          g.append(circle, ring); svg.appendChild(g);
+        });
+      }
+
+      setInterval(() => {
+        taps = taps >= 4 ? 0 : taps + 1;
+        if (taps === 0) {
+          label.textContent = 'Tap corners to map…';
+          label.style.background = '';
+          label.style.color = '#9FE1CB';
+          label.style.opacity = '0.6';
+          label.style.padding = '';
+          label.style.borderRadius = '';
+          label.style.animation = '';
+        }
+        drawTap();
+      }, 900);
+    })();
+
+    // ── Card 3: Live Fan Page ───────────────────────────────────────────────
+    (function() {
+      const root = document.getElementById('anim-fan');
+      Object.assign(root.style, { background: '#fff', padding: '10px' });
+
+      // Search bar
+      const searchBar = el('div', {
+        border: '2px solid #e5e7eb', borderRadius: '7px', padding: '5px 8px',
+        display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px', transition: 'border-color 0.3s'
+      });
+      searchBar.innerHTML = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#1D9E75" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10l3 3" stroke-linecap="round"/></svg>`;
+      const searchText = el('span', { color: '#aaa', fontSize: '10px', fontFamily: 'Inter,sans-serif' });
+      searchText.textContent = 'Search team name…';
+      searchBar.appendChild(searchText);
+      root.appendChild(searchBar);
+
+      // Result card
+      const resultCard = el('div', {
+        border: '1px solid rgba(29,158,117,0.2)', borderLeft: '3px solid #1D9E75',
+        borderRadius: '7px', padding: '7px 9px', display: 'none', animation: 'fadeUp 0.25s ease forwards'
+      });
+      const rName = el('div', { fontSize: '9px', fontWeight: '600', color: '#0F2D1A', fontFamily: 'Inter,sans-serif', marginBottom: '4px' });
+      rName.textContent = 'Bishops U14A';
+      const rInfo = el('div', { display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: '#4A7A5E', fontFamily: 'Inter,sans-serif', marginBottom: '6px' });
+      const rTime = el('span', { color: '#1D9E75', fontWeight: '600' }); rTime.textContent = '10:30';
+      const rField = el('span'); rField.textContent = 'Field 2 (North)';
+      rInfo.append(rTime, rField);
+      const dirBtn = el('div', {
+        background: '#F5A623', color: '#0F2D1A', fontSize: '9px', fontWeight: '600',
+        padding: '4px 0', borderRadius: '5px', textAlign: 'center', fontFamily: 'Inter,sans-serif',
+        display: 'none', animation: 'fadeUp 0.2s ease forwards'
+      });
+      dirBtn.textContent = '→ Walking directions to Field 2';
+      resultCard.append(rName, rInfo, dirBtn);
+      root.appendChild(resultCard);
+
+      // Phases: 0=idle, 1=typing, 2=result, 3=directions
+      const delays = [1800, 1200, 2000, 1200];
+      let phase = 0;
+      function nextPhase() {
+        phase = (phase + 1) % 4;
+        if (phase === 0) {
+          searchBar.style.borderColor = '#e5e7eb';
+          searchText.style.color = '#aaa'; searchText.textContent = 'Search team name…';
+          resultCard.style.display = 'none'; dirBtn.style.display = 'none';
+        } else if (phase === 1) {
+          searchBar.style.borderColor = '#1D9E75';
+          searchText.style.color = '#0F2D1A'; searchText.textContent = 'Bishops U14A';
+        } else if (phase === 2) {
+          resultCard.style.display = 'block';
+          resultCard.style.animation = 'none'; void resultCard.offsetWidth; resultCard.style.animation = 'fadeUp 0.25s ease forwards';
+          dirBtn.style.display = 'none';
+        } else {
+          dirBtn.style.display = 'block';
+          dirBtn.style.animation = 'none'; void dirBtn.offsetWidth; dirBtn.style.animation = 'fadeUp 0.2s ease forwards';
+        }
+        setTimeout(nextPhase, delays[phase]);
+      }
+      setTimeout(nextPhase, delays[0]);
+    })();
+
+    // ── Card 4: Auto Crisis-Handling ────────────────────────────────────────
+    (function() {
+      const root = document.getElementById('anim-crisis');
+      Object.assign(root.style, { background: '#0a1f10', padding: '10px' });
+
+      const alertEl = el('div', { animation: 'fadeUp 0.25s ease forwards' });
+      const alertBox = el('div', {
+        background: 'rgba(226,75,74,0.12)', border: '1px solid rgba(226,75,74,0.35)',
+        borderRadius: '7px', padding: '7px 9px', marginBottom: '6px'
+      });
+      const alertTitle = el('div', { color: '#E24B4A', fontSize: '9px', fontWeight: '600', marginBottom: '2px' });
+      alertTitle.textContent = '⚠ Team cancellation';
+      const alertBody = el('div', { color: 'rgba(226,75,74,0.75)', fontSize: '9px' });
+      alertBody.textContent = 'SACS U16A withdrew — 4 fixtures affected';
+      alertBox.append(alertTitle, alertBody); alertEl.appendChild(alertBox);
+
+      const chatEl = el('div', { animation: 'fadeUp 0.25s ease forwards' });
+      const chatBubble = el('div', {
+        background: 'rgba(29,158,117,0.15)', border: '1px solid rgba(29,158,117,0.25)',
+        borderRadius: '8px 8px 8px 2px', padding: '6px 9px', marginBottom: '6px', color: '#9FE1CB', fontSize: '9px'
+      });
+      chatBubble.textContent = 'Cancel SACS U16A fixtures and compress remaining slots';
+      const chatDots = el('div', { display: 'flex', gap: '4px', padding: '2px 0 0 4px' });
+      for (let i = 0; i < 3; i++) {
+        const d = el('span', {
+          width: '4px', height: '4px', borderRadius: '50%', background: '#1D9E75',
+          display: 'inline-block', animation: `blink 1.2s ${i * 0.2}s infinite`
+        });
+        chatDots.appendChild(d);
+      }
+      chatEl.append(chatBubble, chatDots);
+
+      const fixedEl = el('div', { animation: 'fadeUp 0.25s ease forwards' });
+      const fixedBox = el('div', {
+        background: 'rgba(29,158,117,0.12)', border: '1px solid rgba(29,158,117,0.3)',
+        borderRadius: '7px', padding: '7px 9px'
+      });
+      const fixedTitle = el('div', { color: '#1D9E75', fontSize: '9px', fontWeight: '600', marginBottom: '4px' });
+      fixedTitle.textContent = '✓ Programme updated · 4 fixtures rescheduled';
+      [{t:'10:00',m:'Bishops U14A vs SACS U14A'},{t:'10:30',m:'Bishops U16A vs SACS U18A'}].forEach((r,i)=>{
+        const row = el('div', { display:'flex', gap:'6px', fontSize:'9px', color:'#9FE1CB', padding:'2px 0', borderTop: i>0?'1px solid rgba(29,158,117,0.12)':'none' });
+        const t=el('span',{color:'#F5A623',minWidth:'30px'});t.textContent=r.t;
+        const m=el('span');m.textContent=r.m;
+        row.append(t,m); fixedBox.appendChild(row);
+      });
+      fixedBox.insertBefore(fixedTitle, fixedBox.firstChild);
+      fixedEl.appendChild(fixedBox);
+
+      const phases = [alertEl, chatEl, fixedEl];
+      const delays = [2000, 1800, 2400];
+      let cur = 0;
+      root.appendChild(alertEl);
+
+      function nextPhase() {
+        if (phases[cur].parentNode === root) root.removeChild(phases[cur]);
+        cur = (cur + 1) % 3;
+        root.appendChild(phases[cur]);
+        phases[cur].style.animation = 'none'; void phases[cur].offsetWidth; phases[cur].style.animation = 'fadeUp 0.25s ease forwards';
+        setTimeout(nextPhase, delays[cur]);
+      }
+      setTimeout(nextPhase, delays[0]);
+    })();
 
     // ── Video placeholder: hide placeholder when iframe has a src ─────────
     const iframe = document.querySelector('.video-embed iframe');
